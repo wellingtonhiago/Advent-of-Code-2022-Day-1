@@ -1,17 +1,34 @@
+import java.io.File
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    fun parseInput(input: String): List<List<Int>> = input.split("\\s*\n\\s*\n".toRegex())
+        .map { group -> group
+            .lines()
+            .map { it.toInt() }
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+
+    fun part1(input: String): Int {
+        val data: List<List<Int>> = parseInput(input)
+
+        return data.maxOf { it.sum() }
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
 
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    fun part2(input: String): Int {
+        val data: List<List<Int>> = parseInput(input)
+        return data
+            .map { it.sum()}
+            .sortedDescending()
+            .take(3)
+            .sum()
+    }
+
+
+    val testInput: String = File("src/Day01.txt").readText()
+
+    println(part1(testInput))
+    println(part2(testInput))
+
+
 }
